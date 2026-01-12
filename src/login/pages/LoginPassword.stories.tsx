@@ -16,6 +16,16 @@ export const Default: Story = {
     render: () => <KcPageStory />
 };
 
+export const WithoutPasswordReset: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm: { resetPasswordAllowed: false }
+            }}
+        />
+    )
+};
+
 /**
  * WithPasswordError:
  * - Purpose: Tests the behavior when an error occurs in the password field (e.g., incorrect password).

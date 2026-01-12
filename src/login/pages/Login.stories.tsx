@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { createKcPageStory } from "../KcPageStory";
 
-const { KcPageStory } = createKcPageStory({ pageId: "login-username.ftl" });
+const { KcPageStory } = createKcPageStory({ pageId: "login.ftl" });
 
 const meta = {
-    title: "login/login-username.ftl",
+    title: "login/login.ftl",
     component: KcPageStory
 } satisfies Meta<typeof KcPageStory>;
 
@@ -62,6 +62,16 @@ export const WithoutRememberMe: Story = {
     )
 };
 
+export const WithoutPasswordReset: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm: { resetPasswordAllowed: false }
+            }}
+        />
+    )
+};
+
 export const WithEmailAsUsername: Story = {
     render: () => (
         <KcPageStory
@@ -77,6 +87,24 @@ export const WithPresetUsername: Story = {
         <KcPageStory
             kcContext={{
                 login: { username: "max.mustermann@mail.com" }
+            }}
+        />
+    )
+};
+
+export const WithImmutablePresetUsername: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                auth: {
+                    attemptedUsername: "max.mustermann@mail.com",
+                    showUsername: true
+                },
+                usernameHidden: true,
+                message: {
+                    type: "info",
+                    summary: "Please re-authenticate to continue"
+                }
             }}
         />
     )
@@ -175,6 +203,16 @@ export const WithSocialProviders: Story = {
                         }
                     ]
                 }
+            }}
+        />
+    )
+};
+
+export const WithoutPasswordField: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm: { password: false }
             }}
         />
     )
@@ -320,7 +358,6 @@ export const WithSocialProvidersAndWithoutRememberMe: Story = {
         />
     )
 };
-
 /**
  * WithAuthPassKey:
  * - Purpose: Test usage of Sign In With Pass Key integration

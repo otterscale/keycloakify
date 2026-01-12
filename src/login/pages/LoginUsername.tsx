@@ -43,7 +43,6 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
             displayMessage={!messagesPerField.existsError("username")}
-            displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
             headerNode={null}
             socialProvidersNode={
                 <>
@@ -97,16 +96,18 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                             </div>
                                             <span className="sr-only">OtterScale</span>
                                         </a>
-                                        <FieldDescription>
-                                            <div id="kc-registration">
-                                                <span>
-                                                    {msg("noAccount")}{" "}
-                                                    <a tabIndex={6} href={url.registrationUrl} className="hover:underline">
-                                                        {msg("doRegister")}
-                                                    </a>
-                                                </span>
-                                            </div>
-                                        </FieldDescription>
+                                        {realm.password && realm.registrationAllowed && !registrationDisabled && (
+                                            <FieldDescription>
+                                                <div id="kc-registration">
+                                                    <span>
+                                                        {msg("noAccount")}{" "}
+                                                        <a tabIndex={6} href={url.registrationUrl} className="hover:underline">
+                                                            {msg("doRegister")}
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </FieldDescription>
+                                        )}
                                     </div>
                                     {!usernameHidden && (
                                         <Field>

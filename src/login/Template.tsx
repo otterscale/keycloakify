@@ -8,7 +8,8 @@ import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 
-import { Globe } from "lucide-react";
+import { AlertCircle, Globe, Info } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 
@@ -84,6 +85,17 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     </div>
                 )}
             </div>
+            {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
+            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+                <div className="absolute top-4 flex p-4 md:top-12">
+                    {(message.type === "success" || message.type === "info") && (
+                        <AlertWrapper variant="default" icon={<Info />} summary={message.summary} />
+                    )}
+                    {(message.type === "warning" || message.type === "error") && (
+                        <AlertWrapper variant="destructive" icon={<AlertCircle />} summary={message.summary} />
+                    )}
+                </div>
+            )}
             <div className="w-full max-w-sm">
                 <div className={kcClsx("kcFormCardClass")}>
                     <header className={kcClsx("kcFormHeaderClass")}>
@@ -121,29 +133,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     </header>
                     <div id="kc-content">
                         <div id="kc-content-wrapper">
-                            {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                                <div
-                                    className={clsx(
-                                        `alert-${message.type}`,
-                                        kcClsx("kcAlertClass"),
-                                        `pf-m-${message?.type === "error" ? "danger" : message.type}`
-                                    )}
-                                >
-                                    <div className="pf-c-alert__icon">
-                                        {message.type === "success" && <span className={kcClsx("kcFeedbackSuccessIcon")}></span>}
-                                        {message.type === "warning" && <span className={kcClsx("kcFeedbackWarningIcon")}></span>}
-                                        {message.type === "error" && <span className={kcClsx("kcFeedbackErrorIcon")}></span>}
-                                        {message.type === "info" && <span className={kcClsx("kcFeedbackInfoIcon")}></span>}
-                                    </div>
-                                    <span
-                                        className={kcClsx("kcAlertTitleClass")}
-                                        dangerouslySetInnerHTML={{
-                                            __html: kcSanitize(message.summary)
-                                        }}
-                                    />
-                                </div>
-                            )}
                             {children}
                             {auth !== undefined && auth.showTryAnotherWayLink && (
                                 <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
@@ -176,5 +165,22 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 </div>
             </div>
         </div>
+    );
+}
+
+function AlertWrapper(props: { variant: "default" | "destructive" | null | undefined; icon: JSX.Element; summary: string }) {
+    const { variant, icon, summary } = props;
+
+    return (
+        <Alert variant={variant}>
+            {icon}
+            <AlertDescription>
+                <span
+                    dangerouslySetInnerHTML={{
+                        __html: kcSanitize(summary)
+                    }}
+                />
+            </AlertDescription>
+        </Alert>
     );
 }
