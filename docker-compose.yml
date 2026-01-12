@@ -7,5 +7,5 @@ services:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     volumes:
-      - ./dist_keycloak/keycloak-theme-for-kc-all-other-versions.jar:/opt/keycloak/providers/otterscale-theme.jar
+      - ./dist_keycloak/otterscale-theme.jar:/opt/keycloak/providers/otterscale-theme.jar
     command: start-dev

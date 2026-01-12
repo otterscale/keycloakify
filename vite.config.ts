@@ -10,7 +10,12 @@ export default defineConfig({
         react(),
         tailwindcss(),
         keycloakify({
-            accountThemeImplementation: "none"
+            accountThemeImplementation: "none",
+            themeName: "otterscale-theme",
+            keycloakVersionTargets: {
+                "22-to-25": false,
+                "all-other-versions": "otterscale-theme.jar"
+            }
         })
     ],
     resolve: {
