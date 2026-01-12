@@ -37,16 +37,7 @@ export const WithHtmlErrorMessage: Story = {
         />
     )
 };
-export const FrenchError: Story = {
-    render: () => (
-        <KcPageStory
-            kcContext={{
-                locale: { currentLanguageTag: "fr" },
-                message: { summary: "Une erreur s'est produite" }
-            }}
-        />
-    )
-};
+
 export const WithSkipLink: Story = {
     render: () => (
         <KcPageStory

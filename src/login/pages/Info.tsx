@@ -3,77 +3,103 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
+import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
+
 export default function Info(props: PageProps<Extract<KcContext, { pageId: "info.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
-    const { advancedMsgStr, msg } = i18n;
+    const { advancedMsgStr, msgStr } = i18n;
 
     const { messageHeader, message, requiredActions, skipLink, pageRedirectUri, actionUri, client } = kcContext;
 
     return (
-        <Template
-            kcContext={kcContext}
-            i18n={i18n}
-            doUseDefaultCss={doUseDefaultCss}
-            classes={classes}
-            displayMessage={false}
-            headerNode={
-                <span
-                    dangerouslySetInnerHTML={{
-                        __html: kcSanitize(messageHeader ? advancedMsgStr(messageHeader) : message.summary)
-                    }}
-                />
-            }
-        >
+        <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} displayMessage={false} headerNode={null}>
             <div id="kc-info-message">
-                <p
-                    className="instruction"
-                    dangerouslySetInnerHTML={{
-                        __html: kcSanitize(
-                            (() => {
-                                let html = message.summary?.trim();
+                <Empty>
+                    <EmptyHeader>
+                        <EmptyTitle>
+                            <span
+                                dangerouslySetInnerHTML={{
+                                    __html: kcSanitize(messageHeader ? advancedMsgStr(messageHeader) : message.summary)
+                                }}
+                            />
+                        </EmptyTitle>
+                        <EmptyDescription>
+                            <p
+                                className="instruction"
+                                dangerouslySetInnerHTML={{
+                                    __html: kcSanitize(
+                                        (() => {
+                                            let html = message.summary?.trim();
 
-                                if (requiredActions) {
-                                    html += " <b>";
+                                            if (requiredActions) {
+                                                html += " <b>";
 
-                                    html += requiredActions.map(requiredAction => advancedMsgStr(`requiredAction.${requiredAction}`)).join(", ");
+                                                html += requiredActions
+                                                    .map(requiredAction => advancedMsgStr(`requiredAction.${requiredAction}`))
+                                                    .join(", ");
 
-                                    html += "</b>";
-                                }
+                                                html += "</b>";
+                                            }
 
-                                return html;
-                            })()
-                        )
-                    }}
-                />
-                {(() => {
-                    if (skipLink) {
-                        return null;
-                    }
+                                            return html;
+                                        })()
+                                    )
+                                }}
+                            />
+                        </EmptyDescription>
+                    </EmptyHeader>
 
-                    if (pageRedirectUri) {
-                        return (
-                            <p>
-                                <a href={pageRedirectUri}>{msg("backToApplication")}</a>
-                            </p>
-                        );
-                    }
-                    if (actionUri) {
-                        return (
-                            <p>
-                                <a href={actionUri}>{msg("proceedWithAction")}</a>
-                            </p>
-                        );
-                    }
+                    {(() => {
+                        if (skipLink) {
+                            return null;
+                        }
 
-                    if (client.baseUrl) {
-                        return (
-                            <p>
-                                <a href={client.baseUrl}>{msg("backToApplication")}</a>
-                            </p>
-                        );
-                    }
-                })()}
+                        if (pageRedirectUri) {
+                            return (
+                                <p>
+                                    <EmptyContent>
+                                        <Button asChild size="sm">
+                                            <a href={pageRedirectUri}>
+                                                <ChevronLeft />
+                                                {msgStr("backToApplication").replace(/&laquo;/g, "")}
+                                            </a>
+                                        </Button>
+                                    </EmptyContent>
+                                </p>
+                            );
+                        }
+
+                        if (actionUri) {
+                            return (
+                                <p>
+                                    <EmptyContent>
+                                        <Button asChild size="sm">
+                                            <a href={actionUri}>{msgStr("proceedWithAction").replace(/&raquo;/g, "")}</a>
+                                        </Button>
+                                    </EmptyContent>
+                                </p>
+                            );
+                        }
+
+                        if (client.baseUrl) {
+                            return (
+                                <p>
+                                    <EmptyContent>
+                                        <Button asChild size="sm">
+                                            <a href={client.baseUrl}>
+                                                <ChevronLeft />
+                                                {msgStr("backToApplication").replace(/&laquo;/g, "")}
+                                            </a>
+                                        </Button>
+                                    </EmptyContent>
+                                </p>
+                            );
+                        }
+                    })()}
+                </Empty>
             </div>
         </Template>
     );
