@@ -5,6 +5,13 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { useScript } from "keycloakify/login/pages/LoginUsername.useScript";
+import { ArcticonsOtter } from "@/components/svg/arcticons-otter";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+import "../../index.css";
 
 export default function LoginUsername(props: PageProps<Extract<KcContext, { pageId: "login-username.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -37,17 +44,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
             classes={classes}
             displayMessage={!messagesPerField.existsError("username")}
             displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
-            infoNode={
-                <div id="kc-registration">
-                    <span>
-                        {msg("noAccount")}
-                        <a tabIndex={6} href={url.registrationUrl}>
-                            {msg("doRegister")}
-                        </a>
-                    </span>
-                </div>
-            }
-            headerNode={msg("doLogIn")}
+            headerNode={null}
             socialProvidersNode={
                 <>
                     {realm.password && social?.providers !== undefined && social.providers.length !== 0 && (
@@ -82,74 +79,73 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
             <div id="kc-form">
                 <div id="kc-form-wrapper">
                     {realm.password && (
-                        <form
-                            id="kc-form-login"
-                            onSubmit={() => {
-                                setIsLoginButtonDisabled(true);
-                                return true;
-                            }}
-                            action={url.loginAction}
-                            method="post"
-                        >
-                            {!usernameHidden && (
-                                <div className={kcClsx("kcFormGroupClass")}>
-                                    <label htmlFor="username" className={kcClsx("kcLabelClass")}>
-                                        {!realm.loginWithEmailAllowed
-                                            ? msg("username")
-                                            : !realm.registrationEmailAsUsername
-                                              ? msg("usernameOrEmail")
-                                              : msg("email")}
-                                    </label>
-                                    <input
-                                        tabIndex={2}
-                                        id="username"
-                                        className={kcClsx("kcInputClass")}
-                                        name="username"
-                                        defaultValue={login.username ?? ""}
-                                        type="text"
-                                        autoFocus
-                                        autoComplete="username"
-                                        aria-invalid={messagesPerField.existsError("username")}
-                                    />
-                                    {messagesPerField.existsError("username") && (
-                                        <span id="input-error" className={kcClsx("kcInputErrorMessageClass")} aria-live="polite">
-                                            {messagesPerField.getFirstError("username")}
-                                        </span>
+                        <div className="flex flex-col gap-6">
+                            <form
+                                id="kc-form-login"
+                                onSubmit={() => {
+                                    setIsLoginButtonDisabled(true);
+                                    return true;
+                                }}
+                                action={url.loginAction}
+                                method="post"
+                            >
+                                <FieldGroup>
+                                    <div className="flex flex-col items-center gap-2 text-center">
+                                        <a href="https://otterscale.com" className="flex flex-col items-center gap-2 font-medium">
+                                            <div className="flex h-8 items-center justify-center rounded-md">
+                                                <ArcticonsOtter className="size-12" />
+                                            </div>
+                                            <span className="sr-only">OtterScale</span>
+                                        </a>
+                                        <FieldDescription>
+                                            <div id="kc-registration">
+                                                <span>
+                                                    {msg("noAccount")}{" "}
+                                                    <a tabIndex={6} href={url.registrationUrl}>
+                                                        {msg("doRegister")}
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </FieldDescription>
+                                    </div>
+                                    {!usernameHidden && (
+                                        <Field>
+                                            <FieldLabel htmlFor="username">
+                                                {!realm.loginWithEmailAllowed
+                                                    ? msg("username")
+                                                    : !realm.registrationEmailAsUsername
+                                                      ? msg("usernameOrEmail")
+                                                      : msg("email")}
+                                            </FieldLabel>
+                                            <Input
+                                                tabIndex={2}
+                                                id="username"
+                                                name="username"
+                                                defaultValue={login.username ?? ""}
+                                                type="text"
+                                                autoFocus
+                                                autoComplete="off"
+                                                aria-invalid={messagesPerField.existsError("username")}
+                                            />
+                                            {messagesPerField.existsError("username") && (
+                                                <FieldError>{messagesPerField.getFirstError("username")}</FieldError>
+                                            )}
+                                        </Field>
                                     )}
-                                </div>
-                            )}
-
-                            <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
-                                <div id="kc-form-options">
                                     {realm.rememberMe && !usernameHidden && (
-                                        <div className="checkbox">
-                                            <label>
-                                                <input
-                                                    tabIndex={3}
-                                                    id="rememberMe"
-                                                    name="rememberMe"
-                                                    type="checkbox"
-                                                    defaultChecked={!!login.rememberMe}
-                                                />{" "}
-                                                {msg("rememberMe")}
-                                            </label>
-                                        </div>
+                                        <Field orientation="horizontal">
+                                            <Checkbox tabIndex={3} id="rememberMe" name="rememberMe" defaultChecked={!!login.rememberMe} />
+                                            <FieldLabel htmlFor="rememberMe">{msg("rememberMe")}</FieldLabel>
+                                        </Field>
                                     )}
-                                </div>
-                            </div>
-
-                            <div id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
-                                <input
-                                    tabIndex={4}
-                                    disabled={isLoginButtonDisabled}
-                                    className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
-                                    name="login"
-                                    id="kc-login"
-                                    type="submit"
-                                    value={msgStr("doLogIn")}
-                                />
-                            </div>
-                        </form>
+                                    <Field>
+                                        <Button tabIndex={4} disabled={isLoginButtonDisabled} name="login" id="kc-login" type="submit">
+                                            {msgStr("doLogIn")}
+                                        </Button>
+                                    </Field>
+                                </FieldGroup>
+                            </form>
+                        </div>
                     )}
                 </div>
             </div>
