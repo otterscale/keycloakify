@@ -151,32 +151,32 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
             </div>
             {enableWebAuthnConditionalUI && (
                 <>
-                    <form id="webauth" action={url.loginAction} method="post">
-                        <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
-                        <input type="hidden" id="authenticatorData" name="authenticatorData" />
-                        <input type="hidden" id="signature" name="signature" />
-                        <input type="hidden" id="credentialId" name="credentialId" />
-                        <input type="hidden" id="userHandle" name="userHandle" />
-                        <input type="hidden" id="error" name="error" />
-                    </form>
+                    <FieldGroup className="pt-6">
+                        <Field>
+                            <Button variant={"secondary"} id={webAuthnButtonId}>
+                                {msgStr("passkey-doAuthenticate")}
+                            </Button>
+                        </Field>
 
-                    {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
-                        <>
-                            <form id="authn_select" className={kcClsx("kcFormClass")}>
-                                {authenticators.authenticators.map((authenticator, i) => (
-                                    <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
-                                ))}
-                            </form>
-                        </>
-                    )}
-                    <br />
+                        <form id="webauth" action={url.loginAction} method="post">
+                            <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
+                            <input type="hidden" id="authenticatorData" name="authenticatorData" />
+                            <input type="hidden" id="signature" name="signature" />
+                            <input type="hidden" id="credentialId" name="credentialId" />
+                            <input type="hidden" id="userHandle" name="userHandle" />
+                            <input type="hidden" id="error" name="error" />
+                        </form>
 
-                    <input
-                        id={webAuthnButtonId}
-                        type="button"
-                        className={kcClsx("kcButtonClass", "kcButtonDefaultClass", "kcButtonBlockClass", "kcButtonLargeClass")}
-                        value={msgStr("passkey-doAuthenticate")}
-                    />
+                        {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
+                            <>
+                                <form id="authn_select" className={kcClsx("kcFormClass")}>
+                                    {authenticators.authenticators.map((authenticator, i) => (
+                                        <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
+                                    ))}
+                                </form>
+                            </>
+                        )}
+                    </FieldGroup>
                 </>
             )}
         </Template>
