@@ -1,16 +1,17 @@
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
+import { ArcticonsOtter } from "@/components/svg/arcticons-otter";
+import { Button } from "@/components/ui/button";
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+import "../../index.css";
+
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
 
     const { url, realm, auth, messagesPerField } = kcContext;
 
@@ -22,61 +23,60 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            displayInfo
             displayMessage={!messagesPerField.existsError("username")}
-            infoNode={realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}
-            headerNode={msg("emailForgotTitle")}
+            headerNode={null}
         >
-            <form id="kc-reset-password-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div className={kcClsx("kcLabelWrapperClass")}>
-                        <label htmlFor="username" className={kcClsx("kcLabelClass")}>
+            <form id="kc-reset-password-form" action={url.loginAction} method="post">
+                <FieldGroup>
+                    <div className="flex flex-col items-center gap-2 text-center">
+                        <a href="https://otterscale.com" className="flex flex-col items-center gap-2 font-medium">
+                            <div className="flex h-8 items-center justify-center rounded-md">
+                                <ArcticonsOtter className="size-12" />
+                            </div>
+                            <span className="sr-only">OtterScale</span>
+                        </a>
+                        <FieldDescription>{msg("emailForgotTitle")} </FieldDescription>
+                    </div>
+                    <Field>
+                        <FieldLabel htmlFor="username">
                             {!realm.loginWithEmailAllowed
                                 ? msg("username")
                                 : !realm.registrationEmailAsUsername
                                   ? msg("usernameOrEmail")
                                   : msg("email")}
-                        </label>
-                    </div>
-                    <div className={kcClsx("kcInputWrapperClass")}>
-                        <input
-                            type="text"
+                        </FieldLabel>
+                        <Input
                             id="username"
                             name="username"
-                            className={kcClsx("kcInputClass")}
-                            autoFocus
                             defaultValue={auth.attemptedUsername ?? ""}
+                            type="text"
+                            autoFocus
+                            autoComplete="off"
                             aria-invalid={messagesPerField.existsError("username")}
                         />
+                        <FieldDescription>
+                            {realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}
+                        </FieldDescription>
                         {messagesPerField.existsError("username") && (
-                            <span
-                                id="input-error-username"
-                                className={kcClsx("kcInputErrorMessageClass")}
-                                aria-live="polite"
-                                dangerouslySetInnerHTML={{
-                                    __html: kcSanitize(messagesPerField.get("username"))
-                                }}
-                            />
+                            <FieldError>
+                                <span
+                                    id="input-error-username"
+                                    aria-live="polite"
+                                    dangerouslySetInnerHTML={{
+                                        __html: kcSanitize(messagesPerField.get("username"))
+                                    }}
+                                />
+                            </FieldError>
                         )}
-                    </div>
-                </div>
-                <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")}>
-                            <span>
-                                <a href={url.loginUrl}>{msg("backToLogin")}</a>
-                            </span>
-                        </div>
-                    </div>
+                    </Field>
 
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <input
-                            className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
-                            type="submit"
-                            value={msgStr("doSubmit")}
-                        />
-                    </div>
-                </div>
+                    <Field className="flex gap-4">
+                        <Button type="submit">{msgStr("doSubmit")}</Button>
+                        <Button variant={"secondary"} asChild>
+                            <a href={url.loginUrl}>{msgStr("backToLogin").replace(/&laquo;/g, "")}</a>
+                        </Button>
+                    </Field>
+                </FieldGroup>
             </form>
         </Template>
     );

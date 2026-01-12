@@ -152,7 +152,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
             </div>
             {enableWebAuthnConditionalUI && (
                 <>
-                    <FieldGroup className="pt-6">
+                    <FieldGroup className="pt-4">
                         <Field>
                             <Button variant={"secondary"} id={webAuthnButtonId}>
                                 {msgStr("passkey-doAuthenticate")}
