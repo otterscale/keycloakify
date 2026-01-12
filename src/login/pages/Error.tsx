@@ -25,16 +25,14 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
                         </EmptyDescription>
                     </EmptyHeader>
                     {!skipLink && client !== undefined && client.baseUrl !== undefined && (
-                        <p>
-                            <EmptyContent>
-                                <Button asChild size="sm">
-                                    <a id="backToApplication" href={client.baseUrl}>
-                                        <ChevronLeft />
-                                        {msgStr("backToApplication").replace(/&laquo;/g, "")}
-                                    </a>
-                                </Button>
-                            </EmptyContent>
-                        </p>
+                        <EmptyContent>
+                            <Button asChild size="sm">
+                                <a id="backToApplication" href={client.baseUrl}>
+                                    <ChevronLeft />
+                                    {msgStr("backToApplication").replace(/&laquo;/g, "")}
+                                </a>
+                            </Button>
+                        </EmptyContent>
                     )}
                 </Empty>
             </div>

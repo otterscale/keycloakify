@@ -2,19 +2,14 @@
  * Password step (login-password.ftl) for flows where username is already captured.
  * Adds conditional WebAuthn passkey authenticate section when enabled.
  */
-import type { JSX } from "keycloakify/tools/JSX";
 import { useState } from "react";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { clsx } from "keycloakify/tools/clsx";
-import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
-import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
+import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { useScript } from "keycloakify/login/pages/LoginPassword.useScript";
 import { ArcticonsOtter } from "@/components/svg/arcticons-otter";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 

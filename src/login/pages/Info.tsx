@@ -3,7 +3,7 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
-import { ChevronLeft } from "lucide-react";
+import { Check, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 
@@ -59,43 +59,40 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
 
                         if (pageRedirectUri) {
                             return (
-                                <p>
-                                    <EmptyContent>
-                                        <Button asChild size="sm">
-                                            <a href={pageRedirectUri}>
-                                                <ChevronLeft />
-                                                {msgStr("backToApplication").replace(/&laquo;/g, "")}
-                                            </a>
-                                        </Button>
-                                    </EmptyContent>
-                                </p>
+                                <EmptyContent>
+                                    <Button asChild size="sm">
+                                        <a href={pageRedirectUri}>
+                                            <ChevronLeft />
+                                            {msgStr("backToApplication").replace(/&laquo;/g, "")}
+                                        </a>
+                                    </Button>
+                                </EmptyContent>
                             );
                         }
 
                         if (actionUri) {
                             return (
-                                <p>
-                                    <EmptyContent>
-                                        <Button asChild size="sm">
-                                            <a href={actionUri}>{msgStr("proceedWithAction").replace(/&raquo;/g, "")}</a>
-                                        </Button>
-                                    </EmptyContent>
-                                </p>
+                                <EmptyContent>
+                                    <Button asChild size="sm">
+                                        <a href={actionUri}>
+                                            <Check />
+                                            {msgStr("proceedWithAction").replace(/&raquo;/g, "")}
+                                        </a>
+                                    </Button>
+                                </EmptyContent>
                             );
                         }
 
                         if (client.baseUrl) {
                             return (
-                                <p>
-                                    <EmptyContent>
-                                        <Button asChild size="sm">
-                                            <a href={client.baseUrl}>
-                                                <ChevronLeft />
-                                                {msgStr("backToApplication").replace(/&laquo;/g, "")}
-                                            </a>
-                                        </Button>
-                                    </EmptyContent>
-                                </p>
+                                <EmptyContent>
+                                    <Button asChild size="sm">
+                                        <a href={client.baseUrl}>
+                                            <ChevronLeft />
+                                            {msgStr("backToApplication").replace(/&laquo;/g, "")}
+                                        </a>
+                                    </Button>
+                                </EmptyContent>
                             );
                         }
                     })()}
