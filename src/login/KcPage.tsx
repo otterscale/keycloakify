@@ -7,7 +7,7 @@ import Template from "./Template";
 import LoginResetPassword from "./pages/LoginResetPassword";
 
 const UserProfileFormFields = lazy(
-    () => import("keycloakify/login/UserProfileFormFields")
+    () => import("./UserProfileFormFields")
 );
 
 const Error = lazy(() => import("./pages/Error"));
