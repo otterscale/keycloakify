@@ -104,21 +104,14 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
                                 <h1 id="kc-page-title">{headerNode}</h1>
                             ) : (
-                                <div id="kc-username" className="pb-6">
-                                    <FieldDescription>
-                                        <span>
-                                            <a
-                                                id="reset-login"
-                                                href={url.loginRestartFlowUrl}
-                                                className="flex items-center gap-1 hover:underline"
-                                                aria-label={msgStr("restartLoginTooltip")}
-                                            >
-                                                <ChevronLeft className="size-4" />
-                                                {msg("restartLoginTooltip")}
-                                            </a>
-                                        </span>
-                                    </FieldDescription>
-                                </div>
+                                <FieldDescription id="kc-username" className="pb-6">
+                                    <span>
+                                        <a href={url.loginRestartFlowUrl} className="flex items-center gap-1 hover:underline">
+                                            <ChevronLeft className="size-4" />
+                                            {msg("restartLoginTooltip")}
+                                        </a>
+                                    </span>
+                                </FieldDescription>
                             );
 
                             if (displayRequiredFields) {

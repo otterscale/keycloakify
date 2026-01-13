@@ -57,6 +57,14 @@ export default function Register(props: RegisterProps) {
             displayRequiredFields={false}
         >
             <form id="kc-register-form" action={url.registrationAction} method="post">
+                <FieldDescription id="kc-form-options" className="pb-6">
+                    <span>
+                        <a href={url.loginUrl} className="flex items-center gap-1 hover:underline">
+                            <ChevronLeft className="size-4" />
+                            {msgStr("backToLogin").replace(/&laquo;/g, "")}
+                        </a>
+                    </span>
+                </FieldDescription>
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-2 text-center">
                         <a href="https://otterscale.com" className="flex flex-col items-center gap-2 font-medium">
@@ -65,16 +73,6 @@ export default function Register(props: RegisterProps) {
                             </div>
                             <span className="sr-only">OtterScale</span>
                         </a>
-                        <FieldDescription>
-                            <div id="kc-form-options">
-                                <span>
-                                    <a href={url.loginUrl} className="flex items-center gap-1 hover:underline">
-                                        <ChevronLeft className="size-4" />
-                                        {msgStr("backToLogin").replace(/&laquo;/g, "")}
-                                    </a>
-                                </span>
-                            </div>
-                        </FieldDescription>
                     </div>
                     <UserProfileFormFields
                         kcContext={kcContext}
