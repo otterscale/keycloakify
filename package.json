@@ -1,10 +1,10 @@
 {
-    "name": "keycloakify-starter",
-    "version": "0.0.1",
-    "description": "Starter for Keycloakify 11",
+    "name": "otterscale-keycloakify",
+    "version": "0.0.2",
+    "description": "Keycloakify for OtterScale",
     "repository": {
         "type": "git",
-        "url": "git://github.com/codegouvfr/keycloakify-starter.git"
+        "url": "git://github.com/otterscale/keycloakify.git"
     },
     "type": "module",
     "scripts": {
