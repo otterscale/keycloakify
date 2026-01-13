@@ -74,11 +74,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             <DropdownMenuContent className="w-36" align="end">
                                 <DropdownMenuRadioGroup value={currentLanguage.languageTag}>
                                     {enabledLanguages.map(({ languageTag, label, href }, i) => (
-                                        <DropdownMenuRadioItem key={languageTag} value={languageTag}>
-                                            <a role="menuitem" id={`language-${i + 1}`} href={href}>
+                                        <a role="menuitem" id={`language-${i + 1}`} href={href}>
+                                            <DropdownMenuRadioItem key={languageTag} value={languageTag}>
                                                 {label}
-                                            </a>
-                                        </DropdownMenuRadioItem>
+                                            </DropdownMenuRadioItem>
+                                        </a>
                                     ))}
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuContent>
