@@ -2,8 +2,7 @@ import type { JSX } from "keycloakify/tools/JSX";
 import { useState, useLayoutEffect } from "react";
 import type { LazyOrNot } from "keycloakify/tools/LazyOrNot";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
-import { clsx } from "keycloakify/tools/clsx";
+import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFormFieldsProps";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
@@ -12,7 +11,6 @@ import { ArcticonsOtter } from "@/components/svg/arcticons-otter";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 
 import "../../index.css";
 import { ChevronLeft } from "lucide-react";
@@ -30,10 +28,9 @@ export default function Register(props: RegisterProps) {
         classes
     });
 
-    const { messageHeader, url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } =
-        kcContext;
+    const { url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } = kcContext;
 
-    const { msg, msgStr, advancedMsg } = i18n;
+    const { msg, msgStr } = i18n;
 
     const [isFormSubmittable, setIsFormSubmittable] = useState(false);
     const [areTermsAccepted, setAreTermsAccepted] = useState(false);
@@ -87,16 +84,46 @@ export default function Register(props: RegisterProps) {
                         doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                     />
                     {termsAcceptanceRequired && (
-                        <TermsAcceptance
-                            i18n={i18n}
-                            kcClsx={kcClsx}
-                            messagesPerField={messagesPerField}
-                            areTermsAccepted={areTermsAccepted}
-                            onAreTermsAcceptedValueChange={setAreTermsAccepted}
-                        />
+                        <Field>
+                            <FieldLabel>{msg("termsTitle")}</FieldLabel>
+                            <FieldDescription>
+                                <a href="/terms-of-service" target="_blank" className="hover:underline">
+                                    Terms of Service
+                                </a>
+                                {" & "}
+                                <a href="/privacy-policy" target="_blank" className="hover:underline">
+                                    Privacy Policy.
+                                </a>
+                            </FieldDescription>
+                            <Field orientation="horizontal">
+                                <Checkbox
+                                    required
+                                    id="termsAccepted"
+                                    name="termsAccepted"
+                                    checked={areTermsAccepted}
+                                    onCheckedChange={checked => setAreTermsAccepted(checked === true)}
+                                    aria-invalid={messagesPerField.existsError("termsAccepted")}
+                                />
+                                <FieldLabel htmlFor="termsAccepted">{msg("acceptTerms")}</FieldLabel>
+                            </Field>
+                            {messagesPerField.existsError("termsAccepted") && (
+                                <FieldError>
+                                    <span
+                                        id="input-error-terms-accepted"
+                                        className={kcClsx("kcInputErrorMessageClass")}
+                                        aria-live="polite"
+                                        dangerouslySetInnerHTML={{
+                                            __html: kcSanitize(messagesPerField.get("termsAccepted"))
+                                        }}
+                                    />
+                                </FieldError>
+                            )}
+                        </Field>
                     )}
                     {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
-                        <Field className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey} data-action={recaptchaAction}></Field>
+                        <div className="justify-center w-full flex">
+                            <div className="g-recaptcha" data-sitekey={recaptchaSiteKey} data-action={recaptchaAction} />
+                        </div>
                     )}
                     {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (
                         <div id="kc-form-buttons">
@@ -118,56 +145,5 @@ export default function Register(props: RegisterProps) {
                 </FieldGroup>
             </form>
         </Template>
-    );
-}
-
-function TermsAcceptance(props: {
-    i18n: I18n;
-    kcClsx: KcClsx;
-    messagesPerField: Pick<KcContext["messagesPerField"], "existsError" | "get">;
-    areTermsAccepted: boolean;
-    onAreTermsAcceptedValueChange: (areTermsAccepted: boolean) => void;
-}) {
-    const { i18n, kcClsx, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange } = props;
-
-    const { msg } = i18n;
-
-    return (
-        <>
-            <div className="form-group">
-                <div className={kcClsx("kcInputWrapperClass")}>
-                    {msg("termsTitle")}
-                    <div id="kc-registration-terms-text">{msg("termsText")}</div>
-                </div>
-            </div>
-            <div className="form-group">
-                <div className={kcClsx("kcLabelWrapperClass")}>
-                    <input
-                        type="checkbox"
-                        id="termsAccepted"
-                        name="termsAccepted"
-                        className={kcClsx("kcCheckboxInputClass")}
-                        checked={areTermsAccepted}
-                        onChange={e => onAreTermsAcceptedValueChange(e.target.checked)}
-                        aria-invalid={messagesPerField.existsError("termsAccepted")}
-                    />
-                    <label htmlFor="termsAccepted" className={kcClsx("kcLabelClass")}>
-                        {msg("acceptTerms")}
-                    </label>
-                </div>
-                {messagesPerField.existsError("termsAccepted") && (
-                    <div className={kcClsx("kcLabelWrapperClass")}>
-                        <span
-                            id="input-error-terms-accepted"
-                            className={kcClsx("kcInputErrorMessageClass")}
-                            aria-live="polite"
-                            dangerouslySetInnerHTML={{
-                                __html: kcSanitize(messagesPerField.get("termsAccepted"))
-                            }}
-                        />
-                    </div>
-                )}
-            </div>
-        </>
     );
 }
