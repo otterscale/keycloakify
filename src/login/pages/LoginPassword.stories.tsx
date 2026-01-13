@@ -16,6 +16,19 @@ export const Default: Story = {
     render: () => <KcPageStory />
 };
 
+export const WithRestartLogin: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                auth: {
+                    showUsername: true,
+                    attemptedUsername: "admin"
+                }
+            }}
+        />
+    )
+};
+
 export const WithoutPasswordReset: Story = {
     render: () => (
         <KcPageStory

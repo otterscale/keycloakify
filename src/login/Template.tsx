@@ -8,10 +8,11 @@ import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 
-import { AlertCircle, Globe, Info } from "lucide-react";
+import { AlertCircle, ChevronLeft, Globe, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
+import { FieldDescription } from "@/components/ui/field";
 
 import "../index.css";
 
@@ -103,14 +104,20 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
                                 <h1 id="kc-page-title">{headerNode}</h1>
                             ) : (
-                                <div id="kc-username" className={kcClsx("kcFormGroupClass")}>
-                                    <label id="kc-attempted-username">{auth.attemptedUsername}</label>
-                                    <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
-                                        <div className="kc-login-tooltip">
-                                            <i className={kcClsx("kcResetFlowIcon")}></i>
-                                            <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>
-                                        </div>
-                                    </a>
+                                <div id="kc-username" className="pb-6">
+                                    <FieldDescription>
+                                        <span>
+                                            <a
+                                                id="reset-login"
+                                                href={url.loginRestartFlowUrl}
+                                                className="flex items-center gap-1 hover:underline"
+                                                aria-label={msgStr("restartLoginTooltip")}
+                                            >
+                                                <ChevronLeft className="size-4" />
+                                                {msg("restartLoginTooltip")}
+                                            </a>
+                                        </span>
+                                    </FieldDescription>
                                 </div>
                             );
 
