@@ -72,7 +72,7 @@ jobs:
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                   tags: |
-                      type=match,pattern=(.*),group=1,value=${{ needs.check_if_version_upgraded.outputs.to_version }}
+                      ${{ needs.check_if_version_upgraded.outputs.to_version }}
             - uses: docker/build-push-action@v6
               id: push
               with:
