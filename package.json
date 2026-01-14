@@ -1,6 +1,6 @@
 {
     "name": "otterscale-keycloakify",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "Keycloakify for OtterScale",
     "repository": {
         "type": "git",

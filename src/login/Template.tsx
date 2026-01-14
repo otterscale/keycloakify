@@ -22,7 +22,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         displayMessage = true,
         displayRequiredFields = false,
         headerNode,
-        socialProvidersNode = null,
         infoNode = null,
         documentTitle,
         bodyClassName,
@@ -152,7 +151,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     </div>
                                 </form>
                             )}
-                            {socialProvidersNode}
                             {displayInfo && (
                                 <div id="kc-info" className={kcClsx("kcSignUpClass")}>
                                     <div id="kc-info-wrapper" className={kcClsx("kcInfoAreaWrapperClass")}>
