@@ -9,7 +9,7 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}/keycloakify
+    IMAGE_NAME: ${{ github.repository }}
 
 jobs:
     test:
@@ -73,6 +73,7 @@ jobs:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                   tags: |
                       ${{ needs.check_if_version_upgraded.outputs.to_version }}
+                      latest
             - uses: docker/build-push-action@v6
               id: push
               with:
