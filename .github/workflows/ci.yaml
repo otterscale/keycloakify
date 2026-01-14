@@ -39,6 +39,9 @@ jobs:
         if: needs.check_if_version_upgraded.outputs.is_upgraded_version == 'true'
         permissions:
             contents: write
+            packages: write
+            attestations: write
+            id-token: write
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -55,3 +58,26 @@ jobs:
                   files: dist_keycloak/otterscale-theme.jar
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - uses: docker/login-action@v3
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - uses: docker/metadata-action@v5
+              id: meta
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                  tags: |
+                      type=semver,pattern=${{ needs.check_if_version_upgraded.outputs.to_version }}
+            - uses: docker/build-push-action@v6
+              id: push
+              with:
+                  context: .
+                  push: true
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
+            - uses: actions/attest-build-provenance@v3
+              with:
+                  subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+                  subject-digest: ${{ steps.push.outputs.digest }}
+                  push-to-registry: true
