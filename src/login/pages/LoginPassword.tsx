@@ -8,7 +8,7 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { useScript } from "keycloakify/login/pages/LoginPassword.useScript";
-import { ArcticonsOtter } from "@/components/svg/arcticons-otter";
+import { Logo } from "@/components/svg/logo";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -61,7 +61,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                             <div className="flex flex-col items-center gap-2 text-center">
                                 <a href="https://otterscale.com" className="flex flex-col items-center gap-2 font-medium">
                                     <div className="flex h-8 items-center justify-center rounded-md">
-                                        <ArcticonsOtter className="size-12" />
+                                        <Logo className="size-12" />
                                     </div>
                                     <span className="sr-only">OtterScale</span>
                                 </a>
