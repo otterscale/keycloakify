@@ -31,7 +31,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div className="flex flex-col items-center gap-2 text-center">
                         <a href="https://otterscale.com" className="flex flex-col items-center gap-2 font-medium">
                             <div className="flex h-8 items-center justify-center rounded-md">
-                                <Logo className="size-12" />
+                                <Logo className="size-16 stroke-2" />
                             </div>
                             <span className="sr-only">OtterScale</span>
                         </a>
