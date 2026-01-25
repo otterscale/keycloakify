@@ -20,6 +20,9 @@ export const WithInvalidCredential: Story = {
     render: () => (
         <KcPageStory
             kcContext={{
+                locale: {
+                    currentLanguageTag: "zh-TW"
+                },
                 login: {
                     username: "johndoe"
                 },

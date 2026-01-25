@@ -20,9 +20,12 @@ export const WithRestartLogin: Story = {
     render: () => (
         <KcPageStory
             kcContext={{
+                locale: {
+                    currentLanguageTag: "zh-TW"
+                },
                 auth: {
                     showUsername: true,
-                    attemptedUsername: "admin"
+                    attemptedUsername: "paul_tsai@phison.com"
                 }
             }}
         />

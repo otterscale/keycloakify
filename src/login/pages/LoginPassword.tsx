@@ -83,7 +83,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                             <circle cx="10" cy="8" r="5" />
                                             <path d="m16 19 2 2 4-4" className="text-green-600" />
                                         </svg>
-                                        {auth.attemptedUsername}
+                                        {msgStr("doX509Login")} {auth.attemptedUsername}
                                     </FieldDescription>
                                 )}
                             </div>
