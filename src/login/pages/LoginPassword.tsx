@@ -23,7 +23,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
         classes
     });
 
-    const { realm, url, messagesPerField, enableWebAuthnConditionalUI, authenticators } = kcContext;
+    const { realm, auth, url, messagesPerField, enableWebAuthnConditionalUI, authenticators } = kcContext;
 
     const { msg, msgStr } = i18n;
 
@@ -65,17 +65,27 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                     </div>
                                     <span className="sr-only">OtterScale</span>
                                 </a>
-                                <FieldDescription>
-                                    <div id="kc-form-options">
-                                        {realm.resetPasswordAllowed && (
-                                            <span>
-                                                <a tabIndex={5} href={url.loginResetCredentialsUrl} className="hover:underline">
-                                                    {msg("doForgotPassword")}
-                                                </a>
-                                            </span>
-                                        )}
-                                    </div>
-                                </FieldDescription>
+                                {auth !== undefined && auth.attemptedUsername && (
+                                    <FieldDescription className="flex items-center gap-1">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="size-4 lucide lucide-user-round-check-icon lucide-user-round-check"
+                                        >
+                                            <path d="M2 21a8 8 0 0 1 13.292-6" />
+                                            <circle cx="10" cy="8" r="5" />
+                                            <path d="m16 19 2 2 4-4" className="text-green-600" />
+                                        </svg>
+                                        {auth.attemptedUsername}
+                                    </FieldDescription>
+                                )}
                             </div>
                             <Field>
                                 <FieldLabel htmlFor="password">{msg("password")}</FieldLabel>
@@ -89,11 +99,29 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                     aria-invalid={messagesPerField.existsError("username", "password")}
                                 />
                                 {messagesPerField.existsError("password") && <FieldError>{messagesPerField.getFirstError("password")}</FieldError>}
+                                {realm.resetPasswordAllowed && (
+                                    <FieldDescription>
+                                        <span>
+                                            <a
+                                                tabIndex={5}
+                                                href={url.loginResetCredentialsUrl}
+                                                className="text-xs text-muted-foreground hover:underline"
+                                            >
+                                                {msg("doForgotPassword")}
+                                            </a>
+                                        </span>
+                                    </FieldDescription>
+                                )}
                             </Field>
-                            <Field>
+                            <Field className="flex gap-4">
                                 <Button tabIndex={4} disabled={isLoginButtonDisabled} name="login" id="kc-login" type="submit">
                                     {msgStr("doLogIn")}
                                 </Button>
+                                {auth !== undefined && auth.showUsername && !auth.showResetCredentials && (
+                                    <Button variant={"secondary"} asChild>
+                                        <a href={url.loginRestartFlowUrl}>{msgStr("restartLoginTooltip")}</a>
+                                    </Button>
+                                )}
                             </Field>
                         </FieldGroup>
                     </form>
