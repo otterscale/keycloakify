@@ -58,31 +58,15 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                         method="post"
                     >
                         <FieldGroup>
-                            <div className="flex flex-col items-center gap-2 text-center">
+                            <div className="flex flex-col items-center gap-4 text-center ">
                                 <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
                                     <div className="flex h-8 items-center justify-center rounded-md">
-                                        <Logo className="size-16 stroke-2" />
+                                        <Logo className="size-56" />
                                     </div>
                                     <span className="sr-only">OtterScale</span>
                                 </a>
                                 {auth !== undefined && auth.attemptedUsername && (
                                     <FieldDescription className="flex items-center gap-1">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="size-4 lucide lucide-user-round-check-icon lucide-user-round-check"
-                                        >
-                                            <path d="M2 21a8 8 0 0 1 13.292-6" />
-                                            <circle cx="10" cy="8" r="5" />
-                                            <path d="m16 19 2 2 4-4" className="text-green-600" />
-                                        </svg>
                                         {msgStr("doX509Login")} {auth.attemptedUsername}
                                     </FieldDescription>
                                 )}

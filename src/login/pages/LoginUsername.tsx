@@ -59,10 +59,10 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                 method="post"
                             >
                                 <FieldGroup>
-                                    <div className="flex flex-col items-center gap-2 text-center">
+                                    <div className="flex flex-col items-center gap-4 text-center">
                                         <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
                                             <div className="flex h-8 items-center justify-center rounded-md">
-                                                <Logo className="size-16 stroke-2" />
+                                                <Logo className="size-56" />
                                             </div>
                                             <span className="sr-only">OtterScale</span>
                                         </a>
