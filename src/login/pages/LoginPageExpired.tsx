@@ -3,8 +3,9 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
 import { Check, Undo2 } from "lucide-react";
+import { Logo } from "@/components/svg/logo";
 import { Button } from "@/components/ui/button";
-import { Empty, EmptyContent, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
+import { Field, FieldGroup } from "@/components/ui/field";
 
 import "../../index.css";
 
@@ -17,25 +18,31 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
 
     return (
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={null}>
-            <Empty>
-                <EmptyHeader>
-                    <EmptyTitle>{msg("pageExpiredTitle")}</EmptyTitle>
-                </EmptyHeader>
-                <EmptyContent>
-                    <Button asChild size="sm">
-                        <a id="backToApplication" href={url.loginRestartFlowUrl}>
+            <FieldGroup>
+                <div className="flex flex-col items-center gap-4 text-center">
+                    <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
+                        <div className="flex h-8 items-center justify-center rounded-md">
+                            <Logo className="size-56" />
+                        </div>
+                        <span className="sr-only">OtterScale</span>
+                    </a>
+                    <h1 className="text-xl font-semibold">{msg("pageExpiredTitle")}</h1>
+                </div>
+                <Field className="flex gap-4">
+                    <Button asChild>
+                        <a id="loginRestartLink" href={url.loginRestartFlowUrl}>
                             <Undo2 />
                             {msg("pageExpiredMsg1")}
                         </a>
                     </Button>
-                    <Button asChild size="sm" variant="secondary">
-                        <a id="backToApplication" href={url.loginAction}>
+                    <Button asChild variant="secondary">
+                        <a id="loginContinueLink" href={url.loginAction}>
                             <Check />
                             {msg("pageExpiredMsg2")}
                         </a>
                     </Button>
-                </EmptyContent>
-            </Empty>
+                </Field>
+            </FieldGroup>
         </Template>
     );
 }
