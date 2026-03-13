@@ -6,6 +6,11 @@ import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFo
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { Logo } from "@/components/svg/logo";
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup } from "@/components/ui/field";
+
+import "../../index.css";
 
 type LoginUpdateProfileProps = PageProps<Extract<KcContext, { pageId: "login-update-profile.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -22,7 +27,7 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
 
     const { messagesPerField, url, isAppInitiatedAction } = kcContext;
 
-    const { msg, msgStr } = i18n;
+    const { msgStr } = i18n;
 
     const [isFormSubmittable, setIsFormSubmittable] = useState(false);
 
@@ -32,47 +37,37 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            displayRequiredFields
-            headerNode={msg("loginProfileTitle")}
+            headerNode={null}
             displayMessage={messagesPerField.exists("global")}
         >
-            <form id="kc-update-profile-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <UserProfileFormFields
-                    kcContext={kcContext}
-                    i18n={i18n}
-                    kcClsx={kcClsx}
-                    onIsFormSubmittableValueChange={setIsFormSubmittable}
-                    doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                />
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")} />
+            <form id="kc-update-profile-form" action={url.loginAction} method="post">
+                <FieldGroup>
+                    <div className="flex flex-col items-center gap-4 text-center">
+                        <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
+                            <div className="flex h-8 items-center justify-center rounded-md">
+                                <Logo className="size-56" />
+                            </div>
+                            <span className="sr-only">OtterScale</span>
+                        </a>
                     </div>
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <input
-                            disabled={!isFormSubmittable}
-                            className={kcClsx(
-                                "kcButtonClass",
-                                "kcButtonPrimaryClass",
-                                !isAppInitiatedAction && "kcButtonBlockClass",
-                                "kcButtonLargeClass"
-                            )}
-                            type="submit"
-                            value={msgStr("doSubmit")}
-                        />
+                    <UserProfileFormFields
+                        kcContext={kcContext}
+                        i18n={i18n}
+                        kcClsx={kcClsx}
+                        onIsFormSubmittableValueChange={setIsFormSubmittable}
+                        doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+                    />
+                    <Field className="flex gap-4">
+                        <Button disabled={!isFormSubmittable} type="submit">
+                            {msgStr("doSubmit")}
+                        </Button>
                         {isAppInitiatedAction && (
-                            <button
-                                className={kcClsx("kcButtonClass", "kcButtonDefaultClass", "kcButtonLargeClass")}
-                                type="submit"
-                                name="cancel-aia"
-                                value="true"
-                                formNoValidate
-                            >
-                                {msg("doCancel")}
-                            </button>
+                            <Button variant="secondary" type="submit" name="cancel-aia" value="true" formNoValidate>
+                                {msgStr("doCancel")}
+                            </Button>
                         )}
-                    </div>
-                </div>
+                    </Field>
+                </FieldGroup>
             </form>
         </Template>
     );
