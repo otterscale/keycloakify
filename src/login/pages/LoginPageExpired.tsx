@@ -3,7 +3,7 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
 import { Check, Undo2 } from "lucide-react";
-import { Logo } from "@/components/svg/logo";
+import { RealmLogo } from "@/components/realm-logo";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup } from "@/components/ui/field";
 
@@ -12,7 +12,7 @@ import "../../index.css";
 export default function LoginPageExpired(props: PageProps<Extract<KcContext, { pageId: "login-page-expired.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
-    const { url } = kcContext;
+    const { url, realm } = kcContext;
 
     const { msg } = i18n;
 
@@ -22,7 +22,7 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
                 <div className="flex flex-col items-center gap-4 text-center">
                     <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
                         <div className="flex h-8 items-center justify-center rounded-md">
-                            <Logo className="size-56" />
+                            <RealmLogo displayNameHtml={realm.displayNameHtml} className="size-56" />
                         </div>
                         <span className="sr-only">OtterScale</span>
                     </a>

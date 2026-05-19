@@ -3,7 +3,7 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Logo } from "@/components/svg/logo";
+import { RealmLogo } from "@/components/realm-logo";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
@@ -16,7 +16,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
     const { msg, msgStr } = i18n;
 
-    const { url, messagesPerField, isAppInitiatedAction } = kcContext;
+    const { url, messagesPerField, isAppInitiatedAction, realm } = kcContext;
 
     const [logoutSessions, setLogoutSessions] = useState(true);
 
@@ -34,7 +34,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                     <div className="flex flex-col items-center gap-4 text-center">
                         <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
                             <div className="flex h-8 items-center justify-center rounded-md">
-                                <Logo className="size-56" />
+                                <RealmLogo displayNameHtml={realm.displayNameHtml} className="size-56" />
                             </div>
                             <span className="sr-only">OtterScale</span>
                         </a>

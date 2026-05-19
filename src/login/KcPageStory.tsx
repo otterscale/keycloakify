@@ -16,7 +16,9 @@ const kcContextExtensionPerPage: KcContextExtensionPerPage = {};
 export const { getKcContextMock } = createGetKcContextMock({
     kcContextExtension,
     kcContextExtensionPerPage,
-    overrides: {},
+    overrides: {
+        realm: { displayNameHtml: "" }
+    },
     overridesPerPage: {}
 });
 

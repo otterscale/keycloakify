@@ -4,7 +4,7 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
 import { Check, ChevronLeft } from "lucide-react";
-import { Logo } from "@/components/svg/logo";
+import { RealmLogo } from "@/components/realm-logo";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 
@@ -15,7 +15,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
 
     const { advancedMsgStr, msgStr } = i18n;
 
-    const { messageHeader, message, requiredActions, skipLink, pageRedirectUri, actionUri, client } = kcContext;
+    const { messageHeader, message, requiredActions, skipLink, pageRedirectUri, actionUri, client, realm } = kcContext;
 
     return (
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} displayMessage={false} headerNode={null}>
@@ -24,7 +24,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                     <div className="flex flex-col items-center gap-4 text-center">
                         <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
                             <div className="flex h-8 items-center justify-center rounded-md">
-                                <Logo className="size-56" />
+                                <RealmLogo displayNameHtml={realm.displayNameHtml} className="size-56" />
                             </div>
                             <span className="sr-only">OtterScale</span>
                         </a>
