@@ -130,37 +130,8 @@ export default function Register(props: RegisterProps) {
                             </Field>
                         </div>
                     )}
-
-                    <div className="justify-center flex w-full">
-                        <FieldDescription>
-                            <a href="/terms-of-service" target="_blank" className="hover:underline">
-                                {toTitleCase(msgStr("oauthGrantTos").replace(/\./g, ""))} {/* Of */}
-                            </a>
-                            {" & "}
-                            <a href="/privacy-policy" target="_blank" className="hover:underline">
-                                {toTitleCase(msgStr("oauthGrantPolicy").replace(/\./g, ""))}
-                            </a>
-                        </FieldDescription>
-                    </div>
                 </FieldGroup>
             </form>
         </Template>
     );
 }
-
-const toTitleCase = (str: string | null | undefined): string => {
-    if (!str) return "";
-
-    const minorWords: string[] = ["of", "and", "the", "in", "on", "at", "to", "for", "a", "an"];
-
-    return str
-        .toLowerCase()
-        .split(" ")
-        .map((word, index) => {
-            if (index > 0 && minorWords.includes(word)) {
-                return word;
-            }
-            return word.charAt(0).toUpperCase() + word.slice(1);
-        })
-        .join(" ");
-};
