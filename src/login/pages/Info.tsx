@@ -22,7 +22,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
             <div id="kc-info-message">
                 <FieldGroup>
                     <div className="flex flex-col items-center gap-4 text-center">
-                        <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
+                        <a /* href="https://otterscale.io" */ className="flex flex-col items-center gap-2 font-medium">
                             <div className="flex h-8 items-center justify-center rounded-md">
                                 <RealmLogo displayNameHtml={realm.displayNameHtml} className="size-56" />
                             </div>

@@ -20,7 +20,7 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={null}>
             <FieldGroup>
                 <div className="flex flex-col items-center gap-4 text-center">
-                    <a href="https://otterscale.io" className="flex flex-col items-center gap-2 font-medium">
+                    <a /* href="https://otterscale.io" */ className="flex flex-col items-center gap-2 font-medium">
                         <div className="flex h-8 items-center justify-center rounded-md">
                             <RealmLogo displayNameHtml={realm.displayNameHtml} className="size-56" />
                         </div>
